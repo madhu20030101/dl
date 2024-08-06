@@ -1,0 +1,58 @@
+import numpy as np
+
+# Dataset
+X = np.array([5, 10, 15, 20, 25])
+Y = np.array([14, 28, 30, 38, 50])
+
+# Number of observations
+n = len(X)
+
+# Manual Calculation of Slope (b) and Intercept (a)
+sum_X = np.sum(X)
+sum_Y = np.sum(Y)
+sum_XY = np.sum(X * Y)
+sum_X2 = np.sum(X ** 2)
+
+# Calculating slope (b)
+b = (n * sum_XY - sum_X * sum_Y) / (n * sum_X2 - sum_X ** 2)
+
+# Calculating intercept (a)
+a = (sum_Y - b * sum_X) / n
+
+# Print the coefficients
+print(f"Slope (b): {b}")
+print(f"Intercept (a): {a}")
+
+# Predicting sales
+def predict(x):
+    return a + b * x
+
+# Example prediction
+ad_expense = 12
+predicted_sales = predict(ad_expense)
+print(f"Predicted sales for advertising expense {ad_expense}: {predicted_sales}")
+
+# Using a library for comparison
+from sklearn.linear_model import LinearRegression
+
+# Reshape X to be a 2D array for sklearn
+X_reshaped = X.reshape(-1, 1)
+
+# Create and fit the model
+model = LinearRegression().fit(X_reshaped, Y)
+
+# Print the coefficients from sklearn model
+print(f"Sklearn Slope (b): {model.coef_[0]}")
+print(f"Sklearn Intercept (a): {model.intercept_}")
+
+# Sklearn prediction
+sklearn_predicted_sales = model.predict(np.array([[ad_expense]]))
+print(f"Sklearn predicted sales for advertising expense {ad_expense}: {sklearn_predicted_sales[0]}")
+Slope (b): 1.64
+Intercept (a): 7.400000000000003
+Predicted sales for advertising expense 12: 27.080000000000002
+Sklearn Slope (b): 1.6400000000000003
+Sklearn Intercept (a): 7.399999999999995
+Sklearn predicted sales for advertising expense 12: 27.08
+ 
+ 

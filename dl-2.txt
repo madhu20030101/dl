@@ -1,0 +1,34 @@
+import numpy as np
+X1 = np.array([5, 10, 15, 20, 25])
+X2 = np.array([20, 25, 30, 35, 40])
+Y = np.array([14, 28, 30, 38, 50])
+n = len(X1)
+X = np.column_stack((np.ones(n), X1, X2))
+X_transpose = X.T
+X_transpose_X = np.dot(X_transpose, X)
+X_transpose_X_inv = np.linalg.inv(X_transpose_X)
+X_transpose_Y = np.dot(X_transpose, Y)
+coefficients = np.dot(X_transpose_X_inv, X_transpose_Y)
+a = coefficients[0]
+b1 = coefficients[1]
+b2 = coefficients[2]
+print(f"Intercept (a): {a}")
+print(f"Slope (b1) for Advertising Expense: {b1}")
+print(f"Slope (b2) for Promotional Budget: {b2}")
+
+def predict(ad_expense, promo_budget):
+    return a + b1 * ad_expense + b2 * promo_budget
+ad_expense = 12
+promo_budget = 22
+predicted_sales = predict(ad_expense, promo_budget)
+print(f"Predicted sales for advertising expense {ad_expense} and promotional budget {promo_budget}: {predicted_sales}")
+
+from sklearn.linear_model import LinearRegression
+X_combined = np.column_stack((X1, X2))
+model = LinearRegression().fit(X_combined, Y)
+print(f"Sklearn Intercept (a): {model.intercept_}")
+print(f"Sklearn Slope (b1) for Advertising Expense: {model.coef_[0]}")
+print(f"Sklearn Slope (b2) for Promotional Budget: {model.coef_[1]}")
+
+sklearn_predicted_sales = model.predict(np.array([[ad_expense, promo_budget]]))
+print(f"Sklearn predicted sales for advertising expense {ad_expense} and promotional budget {promo_budget}: {sklearn_predicted_sales[0]}")

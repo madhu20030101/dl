@@ -1,0 +1,30 @@
+import numpy as np
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+
+# Dataset
+X = np.array([[0, 0],
+              [0, 1],
+              [1, 0],
+              [1, 1]])
+
+Y = np.array([0, 1, 1, 0])
+
+# Create the SVM model
+model = svm.SVC(kernel='linear')
+
+# Train the model
+model.fit(X, Y)
+
+# Predictions
+predictions = model.predict(X)
+
+# Print the results
+print("Predictions:", predictions)
+print("Actual labels:", Y)
+print("Accuracy:", accuracy_score(Y, predictions))
+
+# Example prediction on new data
+new_data = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+new_predictions = model.predict(new_data)
+print(f"Prediction for {new_data}:\n {new_predictions}")
