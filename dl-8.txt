@@ -1,0 +1,66 @@
+import numpy as np
+
+import tensorflow as tf
+
+from tensorflow.keras.models import Sequential
+
+from tensorflow.keras.layers import LSTM, Dense
+
+ 
+
+# Generate dummy data
+
+def generate_data(timesteps, features, samples):
+
+    X = np.random.random((samples, timesteps, features))
+
+    y = np.random.random((samples, 1))
+
+    return X, y
+
+ 
+
+# Parameters
+
+timesteps = 10
+
+features = 1
+
+samples = 1000
+
+epochs = 2
+
+batch_size = 32
+
+ 
+
+# Generate data
+
+X, y = generate_data(timesteps, features, samples)
+
+ 
+
+# Build the model
+
+model = Sequential()
+
+model.add(LSTM(50, activation='relu', input_shape=(timesteps, features)))
+
+model.add(Dense(1))
+
+ 
+
+model.compile(optimizer='adam', loss='mse')
+
+ 
+
+# Train the model
+
+model.fit(X, y, epochs=epochs, batch_size=batch_size)
+
+ 
+
+# Summary of the model
+
+model.summary()
+
